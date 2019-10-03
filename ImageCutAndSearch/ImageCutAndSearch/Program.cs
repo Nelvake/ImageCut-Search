@@ -20,7 +20,10 @@ namespace ImageCutAndSearch
             //ManualInput(images, filesPath);
             AutoInit(images, filesPath);
 
-
+            foreach(var image in images)
+            {
+                FileService.ResizeImage(image);
+            }
 
         }
 
