@@ -51,6 +51,13 @@ namespace ImageCutAndSearch
             }
         }
 
+        /// <summary>
+        /// Поиск фотографий.
+        /// </summary>
+        /// <param name="country"></param>
+        /// <param name="city"></param>
+        /// <param name="tag"></param>
+        /// <param name="coordinates"></param>
         public static void SearchImage(string country, string city, string tag, string coordinates)
         {
             var path = DirectoryFind(new FileInfo() { Country = country, City = city, Tag = tag, Coordinates = coordinates }, false);
@@ -89,6 +96,7 @@ namespace ImageCutAndSearch
         /// При отсутсвии создает директорию.
         /// </summary>
         /// <param name="fileInfo"></param>
+        /// <param name="check"></param>
         /// <returns></returns>
         private static string DirectoryFind(FileInfo fileInfo, bool check = true)
         {
