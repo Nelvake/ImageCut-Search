@@ -103,7 +103,7 @@ namespace ImageCutAndSearch
             var path = rootDirectory;
             if (!Directory.Exists($@"{path}\{fileInfo.Country}") && check)
             {
-                Directory.CreateDirectory($"{rootDirectory}{fileInfo.Country}");
+                Directory.CreateDirectory($@"{rootDirectory}\{fileInfo.Country}");
             }
             path += $@"\{fileInfo.Country}";
             if (!Directory.Exists($@"{path}\{fileInfo.City}") && check)
