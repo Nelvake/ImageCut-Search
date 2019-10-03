@@ -19,7 +19,7 @@ namespace ImageCutAndSearch
         /// <returns></returns>
         public static FileInfo InitFileName(FileInfo fileInfo)
         {
-            fileInfo.FileName = $"[{fileInfo.Country}][{fileInfo.City}][{fileInfo.Tag}][{fileInfo.Coordinates}][{Guid.NewGuid()}].";
+            fileInfo.FileName = $"[{fileInfo.Country}][{fileInfo.City}][{fileInfo.Tag}][{fileInfo.Coordinates}][{Guid.NewGuid()}]";
             return fileInfo;
         }
 
@@ -33,7 +33,7 @@ namespace ImageCutAndSearch
             ISupportedImageFormat format = new JpegFormat { Quality = 70 };
             using (MemoryStream inStream = new MemoryStream(fileInfo.PhotoBytes))
             {
-                using (FileStream outStream = File.Create($"{DirectoryFind(fileInfo)}{fileInfo.FileName}{format.DefaultExtension}"))
+                using (FileStream outStream = File.Create($"{DirectoryFind(fileInfo)}{fileInfo.FileName}.{format.DefaultExtension}"))
                 {
                     using (ImageFactory imageFactory = new ImageFactory(preserveExifData: true))
                     {
