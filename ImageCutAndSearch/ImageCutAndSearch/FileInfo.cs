@@ -14,6 +14,11 @@ namespace ImageCutAndSearch
         public string Coordinates { get; set; }
         public string Tag { get; set; }
 
+        public FileInfo()
+        {
+            PhotoBytes = null;
+        }
+
         public FileInfo(string path)
         {
             PhotoBytes = File.ReadAllBytes(path);

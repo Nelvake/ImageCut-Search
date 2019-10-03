@@ -51,6 +51,27 @@ namespace ImageCutAndSearch
             }
         }
 
+        public static void SearchImage(string country, string city, string tag, string coordinates)
+        {
+            var path = DirectoryFind(new FileInfo() { Country = country, City = city, Tag = tag, Coordinates = coordinates }, false);
+            try
+            {
+                var images = Directory.GetFiles(path);
+
+                Console.WriteLine("Найденные фотографии:");
+                foreach (var item in images)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Фотографии не найдены!\n{ex.Message}");
+            }
+
+            
+        }
+
         /// <summary>
         /// Проверка на корректонсть размерности файла.
         /// </summary>
@@ -69,25 +90,25 @@ namespace ImageCutAndSearch
         /// </summary>
         /// <param name="fileInfo"></param>
         /// <returns></returns>
-        private static string DirectoryFind(FileInfo fileInfo)
+        private static string DirectoryFind(FileInfo fileInfo, bool check = true)
         {
             var path = rootDirectory;
-            if (!Directory.Exists($@"{path}\{fileInfo.Country}"))
+            if (!Directory.Exists($@"{path}\{fileInfo.Country}") && check)
             {
                 Directory.CreateDirectory($"{rootDirectory}{fileInfo.Country}");
             }
             path += $@"\{fileInfo.Country}";
-            if (!Directory.Exists($@"{path}\{fileInfo.City}"))
+            if (!Directory.Exists($@"{path}\{fileInfo.City}") && check)
             {
                 Directory.CreateDirectory($@"{path}\{fileInfo.City}");
             }
             path += $@"\{fileInfo.City}";
-            if (!Directory.Exists($@"{path}\{fileInfo.Tag}"))
+            if (!Directory.Exists($@"{path}\{fileInfo.Tag}") && check)
             {
                 Directory.CreateDirectory($@"{path}\{fileInfo.Tag}");
             }
             path += $@"\{fileInfo.Tag}";
-            if (!Directory.Exists($@"{path}\{fileInfo.Coordinates}"))
+            if (!Directory.Exists($@"{path}\{fileInfo.Coordinates}") && check)
             {
                 Directory.CreateDirectory($@"{path}\{fileInfo.Coordinates}");
             }
