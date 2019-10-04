@@ -26,6 +26,7 @@ namespace ImageCutAndSearch
 
         /// <summary>
         /// Уменьшение размера файла.
+        /// На вход принимает файл по типу FileInfo
         /// </summary>
         public static void ResizeImage(FileInfo fileInfo)
         {
@@ -46,6 +47,40 @@ namespace ImageCutAndSearch
                         {
                             Size size = imageFactory.Load(inStream).Image.Size / 2;
                             imageFactory.Load(inStream).Resize(size).Format(format).Save(outStream);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Уменьшение размера файла.
+        /// На вход принимает List по типу FileInfo
+        /// </summary>
+        /// <param name="files"></param>
+        public static void ResizeImage(List<FileInfo> files)
+        {
+            foreach (var fileInfo in files)
+            {
+                var isCorrect = false;
+                if (SizeCorrection(fileInfo)) isCorrect = true;
+                ISupportedImageFormat format = new JpegFormat { Quality = 70 };
+                using (MemoryStream inStream = new MemoryStream(fileInfo.PhotoBytes))
+                {
+                    using (FileStream outStream = File.Create($"{DirectoryFind(fileInfo)}{fileInfo.FileName}.{format.DefaultExtension}"))
+                    {
+                        using (ImageFactory imageFactory = new ImageFactory(preserveExifData: true))
+                        {
+                            if (isCorrect)
+                            {
+                                imageFactory.Load(inStream).Format(format).Save(outStream);
+                            }
+                            else
+                            {
+                                Size size = imageFactory.Load(inStream).Image.Size / 2;
+                                imageFactory.Load(inStream).Resize(size).Format(format).Save(outStream);
+                            }
                         }
                     }
                 }
