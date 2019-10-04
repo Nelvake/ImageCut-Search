@@ -22,10 +22,12 @@ namespace ImageCutAndSearch
             //ManualInput(images, filesPath);
             //AutoInit(images, filesPath);
 
-            foreach (var image in images)
-            {
-                FileService.ResizeImage(image);
-            }
+
+            FileService.ResizeImage(images);
+            //foreach (var image in images)
+            //{
+            //    FileService.ResizeImage(image);
+            //}
 
             //FileService.SearchImage("Россия", "Москва", "Река", "288485");
         }
