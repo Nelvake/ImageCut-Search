@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace ImageCutAndSearch
@@ -75,8 +76,6 @@ namespace ImageCutAndSearch
             {
                 Console.WriteLine($"Фотографии не найдены!\n{ex.Message}");
             }
-
-            
         }
 
         /// <summary>
@@ -100,6 +99,9 @@ namespace ImageCutAndSearch
         /// <returns></returns>
         private static string DirectoryFind(FileInfo fileInfo, bool check = true)
         {
+            // Переменная check выполняет функционал
+            // обычного наращивания пути без создания директорий.
+
             var path = rootDirectory;
             if (!Directory.Exists($@"{path}\{fileInfo.Country}") && check)
             {
@@ -122,6 +124,33 @@ namespace ImageCutAndSearch
             }
             path += $@"\{fileInfo.Coordinates}\";
             return path;
+        }
+
+        /// <summary>
+        /// Инициализирует поля файла по его имени.
+        /// </summary>
+        /// <param name="images"></param>
+        /// <param name="filesPath"></param>
+        public static void InitOfName(List<FileInfo> images, List<string> filesPath)
+        {
+            // Пример файла: Страна_Город_Тэг_Координаты.формат
+            // Разделяющий элемент: _
+
+            List<string> filesName = new List<string>();
+            foreach (var file in filesPath)
+            {
+                filesName.Add(Path.GetFileNameWithoutExtension(file));
+
+                var partsName = filesName.Last().Split("_");
+                images.Add(new FileInfo(file)
+                {
+                    Country = partsName[0],
+                    City = partsName[1],
+                    Tag = partsName[2],
+                    Coordinates = partsName[3]
+                });
+                FileService.InitFileName(images.Last());
+            }
         }
     }
 }
