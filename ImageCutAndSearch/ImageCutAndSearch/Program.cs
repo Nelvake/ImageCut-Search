@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
-using ImageProcessor;
-using ImageProcessor.Imaging.Formats;
 using System.Linq;
 using System.Collections.Generic;
 
