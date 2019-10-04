@@ -9,22 +9,31 @@ namespace ImageCutAndSearch
     {
         static void Main(string[] args)
         {
+            // Приходящий лист по типу FileInfo
             List<FileInfo> images = new List<FileInfo>(5);
 
-
+            #region Использую для инициализации листа
             var rootDirectory = @"C:\New\";
             List<string> filesPath = Directory.GetFiles(rootDirectory).ToList();
 
             FileService.InitOfName(images, filesPath);
             //ManualInput(images, filesPath);
             //AutoInit(images, filesPath);
+            #endregion
 
-            //FileService.ResizeImage(images);
+
+            #region Уменьшение размера фотографии и одновременное распределение по иерархии папок
+            FileService.ResizeImage(images);
+
+            // Два варианта с перегрузкой.
+
             //foreach (var image in images)
             //{
             //    FileService.ResizeImage(image);
             //}
+            #endregion
 
+            // Поиск фотографии по заданым полям.
             FileService.SearchImage("Россия", "Москва", "Река", "288485");
         }
 
