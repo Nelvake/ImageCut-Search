@@ -6,10 +6,16 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ImageCutAndSearch
 {
-    public class FileService
+    /// <summary>
+    /// Класс для работы с файлами.
+    /// Статическим класс сделан сугубо для удобства.
+    /// </summary>
+    public static class FileService
     {
         public static string rootDirectory { get; set; } = @"C:\New";
 
@@ -63,27 +69,7 @@ namespace ImageCutAndSearch
         {
             foreach (var fileInfo in files)
             {
-                var isCorrect = false;
-                if (SizeCorrection(fileInfo)) isCorrect = true;
-                ISupportedImageFormat format = new JpegFormat { Quality = 70 };
-                using (MemoryStream inStream = new MemoryStream(fileInfo.PhotoBytes))
-                {
-                    using (FileStream outStream = File.Create($"{DirectoryFind(fileInfo)}{fileInfo.FileName}.{format.DefaultExtension}"))
-                    {
-                        using (ImageFactory imageFactory = new ImageFactory(preserveExifData: true))
-                        {
-                            if (isCorrect)
-                            {
-                                imageFactory.Load(inStream).Format(format).Save(outStream);
-                            }
-                            else
-                            {
-                                Size size = imageFactory.Load(inStream).Image.Size / 2;
-                                imageFactory.Load(inStream).Resize(size).Format(format).Save(outStream);
-                            }
-                        }
-                    }
-                }
+                ResizeImage(fileInfo);
             }
         }
 
@@ -97,7 +83,7 @@ namespace ImageCutAndSearch
         public static void SearchImage(string country, string city, string tag, string coordinates)
         {
             var path = DirectoryFind(new FileInfo() { Country = country, City = city, Tag = tag, Coordinates = coordinates }, false);
-            try
+            if (path != null)
             {
                 var images = Directory.GetFiles(path);
 
@@ -107,10 +93,9 @@ namespace ImageCutAndSearch
                     Console.WriteLine(item);
                 }
             }
-            catch(Exception ex)
-            {
-                Console.WriteLine($"Фотографии не найдены!\n{ex.Message}");
-            }
+            else
+                Console.WriteLine("Фотографии не найдены!");
+
         }
 
         /// <summary>
@@ -158,6 +143,7 @@ namespace ImageCutAndSearch
                 Directory.CreateDirectory($@"{path}\{fileInfo.Coordinates}");
             }
             path += $@"\{fileInfo.Coordinates}\";
+            if (!Directory.Exists(path) && !check) return null;
             return path;
         }
 

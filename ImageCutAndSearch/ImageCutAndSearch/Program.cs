@@ -22,16 +22,21 @@ namespace ImageCutAndSearch
             //ManualInput(images, filesPath);
             //AutoInit(images, filesPath);
 
-
-            FileService.ResizeImage(images);
+            //FileService.ResizeImage(images);
             //foreach (var image in images)
             //{
             //    FileService.ResizeImage(image);
             //}
 
-            //FileService.SearchImage("Россия", "Москва", "Река", "288485");
+            FileService.SearchImage("Россия", "Москва", "Река", "288485");
         }
 
+        /// <summary>
+        /// Ручной ввод полей файла.
+        /// Используется для тестов.
+        /// </summary>
+        /// <param name="images"></param>
+        /// <param name="filesPath"></param>
         private static void ManualInput(List<FileInfo> images, List<string> filesPath)
         {
             foreach (var file in filesPath)
@@ -47,6 +52,13 @@ namespace ImageCutAndSearch
             }
         }
 
+        /// <summary>
+        /// Автоматический инициализация полей
+        /// с заранее заготовленными данными.
+        /// Используется для тестов
+        /// </summary>
+        /// <param name="images"></param>
+        /// <param name="filesPath"></param>
         private static void AutoInit(List<FileInfo> images, List<string> filesPath)
         {
             images.Add(new FileInfo(filesPath[0])
