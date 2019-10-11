@@ -9,6 +9,7 @@ namespace ImageCutAndSearch
     {
         static void Main(string[] args)
         {
+
             // Приходящий лист по типу FileInfo
             List<FileInfo> images = new List<FileInfo>(5);
 
