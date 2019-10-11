@@ -12,7 +12,6 @@ namespace ImageCutAndSearch
             List<FileInfo> images = new List<FileInfo>(5);
 <<<<<<< HEAD
             Console.WriteLine("Test");
-            Console.Read();
             #region Использую для инициализации листа
 =======
 
