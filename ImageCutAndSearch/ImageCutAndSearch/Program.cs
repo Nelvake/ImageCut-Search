@@ -11,7 +11,7 @@ namespace ImageCutAndSearch
         {
             // Приходящий лист по типу FileInfo
             List<FileInfo> images = new List<FileInfo>(5);
-            Console.WriteLine();
+            Console.WriteLine("Test");
             #region Использую для инициализации листа
             var rootDirectory = @"C:\New\";
             List<string> filesPath = Directory.GetFiles(rootDirectory).ToList();
